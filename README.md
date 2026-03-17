@@ -1,16 +1,16 @@
 # UR Dashboard
 
-Universal Robots Dashboard Server (TCP 29999) 제어용 Python 패키지입니다.
+A Python package for controlling the Universal Robots Dashboard Server (TCP 29999).
 
 ---
 
 ## ✨ Features
 
-* Sync / Async API 지원
-* UR e-Series Dashboard 명령 지원
-* 상태 기반 시퀀스 실행
-* FastAPI Web API 제공
-* Sphinx 문서 지원 (GitHub Pages)
+* Sync / Async API support
+* Supports UR e-Series Dashboard commands
+* State-based sequence execution
+* FastAPI Web API support
+* Sphinx documentation (GitHub Pages)
 
 ---
 
@@ -28,13 +28,13 @@ cd ur-dashboard
 pip install -e .
 ```
 
-### Web API 포함 설치
+### Install with Web API support
 
 ```bash
 pip install -e ".[api]"
 ```
 
-### Docs 포함 설치
+### Install with Docs support
 
 ```bash
 pip install -e ".[docs]"
@@ -79,17 +79,17 @@ asyncio.run(main())
 
 ## 🧠 Sequence Usage
 
-시퀀스는 현재 상태를 기반으로 필요한 단계만 자동 실행합니다.
+Sequences execute only the required steps based on the current robot state.
 
 ### Available Sequences
 
-| Method                     | Description |
-| -------------------------- | ----------- |
-| `seq_servo_on()`           | Servo ON    |
-| `seq_servo_off()`          | Servo OFF   |
-| `seq_start(path=None)`     | 프로그램 실행     |
-| `seq_error_reset()`        | 에러 초기화      |
-| `seq_full_boot(path=None)` | 전체 부팅       |
+| Method                     | Description        |
+| -------------------------- | ------------------ |
+| `seq_servo_on()`           | Turn servo ON      |
+| `seq_servo_off()`          | Turn servo OFF     |
+| `seq_start(path=None)`     | Start program      |
+| `seq_error_reset()`        | Reset errors       |
+| `seq_full_boot(path=None)` | Full boot sequence |
 
 ### Example
 
@@ -209,7 +209,7 @@ ur-dashboard/
 
 ### `SyncDashboard`
 
-동기 방식 제어용 클래스
+Synchronous control interface
 
 ```python
 from ur_dashboard import SyncDashboard
@@ -221,7 +221,7 @@ ur.close()
 
 ### `AsyncDashboard`
 
-비동기 방식 제어용 클래스
+Asynchronous control interface
 
 ```python
 from ur_dashboard import AsyncDashboard
@@ -299,10 +299,10 @@ cd docs
 
 ## ⚠️ Notes
 
-* 실제 장비 사용 시 반드시 안전 확인 필요
-* `unlock_protective_stop()`는 원인 제거 후 사용
-* 일부 명령은 Remote Control 모드 필요
-* `seq_*` 메서드는 상태 기반으로 동작
+* Always ensure safety before operating a real robot
+* Use `unlock_protective_stop()` only after resolving the root cause
+* Some commands require Remote Control mode
+* `seq_*` methods prioritize state-based execution over fixed delays
 
 ---
 
