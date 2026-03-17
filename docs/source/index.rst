@@ -8,7 +8,7 @@ Universal Robots Dashboard Server(TCP 29999) 제어 패키지.
    from ur_dashboard import SyncDashboard
 
    ur = SyncDashboard("192.168.1.101")
-   ur.seq_full_boot("/programs/main.urp")
+   ur.seq_full_boot()
    ur.close()
 
 .. toctree::
