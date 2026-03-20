@@ -3,7 +3,7 @@ from ur_dashboard import AsyncDashboard
 
 
 async def main():
-    ur = AsyncDashboard("192.168.1.101")
+    ur = AsyncDashboard("192.168.163.128")
     await ur.connect()
 
     # --- 상태 조회 ---

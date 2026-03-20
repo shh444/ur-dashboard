@@ -1,12 +1,14 @@
-SPHINXOPTS    ?=
-SPHINXBUILD   ?= sphinx-build
-SOURCEDIR     = source
-BUILDDIR      = build
+PYTHON ?= python
+
+.PHONY: help html clean
 
 help:
-	@$(SPHINXBUILD) -M help "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
+	@echo "Targets:"
+	@echo "  make html   Build both English and Korean docs into build/html"
+	@echo "  make clean  Remove build artifacts"
 
-.PHONY: help Makefile
+html:
+	$(PYTHON) build_multilang.py
 
-%: Makefile
-	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
+clean:
+	rm -rf build

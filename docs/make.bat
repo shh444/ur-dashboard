@@ -1,28 +1,27 @@
 @ECHO OFF
+SETLOCAL
+PUSHD %~dp0
 
-pushd %~dp0
+IF "%PYTHON%"=="" SET PYTHON=python
 
-if "%SPHINXBUILD%" == "" (
-	set SPHINXBUILD=sphinx-build
-)
-set SOURCEDIR=source
-set BUILDDIR=build
+IF "%1"=="" GOTO help
+IF "%1"=="html" GOTO html
+IF "%1"=="clean" GOTO clean
+GOTO help
 
-%SPHINXBUILD% >NUL 2>NUL
-if errorlevel 9009 (
-	echo.
-	echo.The 'sphinx-build' command was not found.
-	echo.Install sphinx: pip install sphinx
-	exit /b 1
-)
+:html
+%PYTHON% build_multilang.py
+GOTO end
 
-if "%1" == "" goto help
-
-%SPHINXBUILD% -M %1 %SOURCEDIR% %BUILDDIR% %SPHINXOPTS% %O%
-goto end
+:clean
+IF EXIST build RMDIR /S /Q build
+GOTO end
 
 :help
-%SPHINXBUILD% -M help %SOURCEDIR% %BUILDDIR% %SPHINXOPTS% %O%
+ECHO Targets:
+ECHO   make html   Build both English and Korean docs into build/html
+ECHO   make clean  Remove build artifacts
 
 :end
-popd
+POPD
+ENDLOCAL

@@ -1,0 +1,83 @@
+{% extends "!layout.html" %}
+
+{% block extrahead %}
+  {{ super() }}
+  <style>
+    .ur-lang-switch {
+      position: fixed;
+      top: 12px;
+      right: 20px;
+      z-index: 9999;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.96);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+      font-size: 13px;
+      line-height: 1;
+    }
+
+    .ur-lang-switch a {
+      text-decoration: none;
+      color: inherit;
+      opacity: 0.7;
+      font-weight: 600;
+    }
+
+    .ur-lang-switch a.active {
+      opacity: 1;
+    }
+
+    @media screen and (max-width: 768px) {
+      .ur-lang-switch {
+        top: auto;
+        right: 12px;
+        bottom: 12px;
+      }
+    }
+  </style>
+{% endblock %}
+
+{% block document %}
+  <div class="ur-lang-switch" aria-label="Language switcher">
+    {% for lang_code, lang_label in available_languages %}
+      <a href="#"
+         data-lang="{{ lang_code }}"
+         class="{% if language == lang_code %}active{% endif %}">
+         {{ lang_label }}
+      </a>
+    {% endfor %}
+  </div>
+
+  <script>
+    (function () {
+      const currentLang = {{ language|tojson }};
+      const links = document.querySelectorAll('.ur-lang-switch a[data-lang]');
+
+      function targetPath(targetLang) {
+        const path = window.location.pathname;
+        const pattern = new RegExp('/(' + currentLang + ')(/|$)');
+
+        if (pattern.test(path)) {
+          return path.replace(pattern, '/' + targetLang + '$2');
+        }
+
+        if (path.endsWith('/')) {
+          return path + '../' + targetLang + '/';
+        }
+
+        return path + '/../' + targetLang + '/';
+      }
+
+      links.forEach(function (link) {
+        const targetLang = link.getAttribute('data-lang');
+        link.setAttribute('href', targetPath(targetLang) + window.location.search + window.location.hash);
+      });
+    }());
+  </script>
+
+  {{ super() }}
+{% endblock %}

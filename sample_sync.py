@@ -1,6 +1,6 @@
 from ur_dashboard import SyncDashboard
 
-ur = SyncDashboard("192.168.1.101")
+ur = SyncDashboard("192.168.163.128")
 
 # --- 상태 조회 ---
 print(ur.state())
